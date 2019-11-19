@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
-import firebase from '../../fireBaseConnection';
+import getDatabase from "../../libs/fireBase/getDatabase";
 
 
 export default class User extends Component {
@@ -12,29 +12,28 @@ export default class User extends Component {
     };
 
     componentDidMount() {
-        firebase.database().ref('/register').on('value', (snapshot) => {
+        getDatabase(`register`, (snapshot) => {
             const register = [];
             snapshot.forEach((childSnapshot) => {
                 let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 register.push(item);
             });
-            this.setState({ register });
+            this.setState({register});
         });
-
-
     }
 
     render() {
         return (
-            <Grid item style={{ width: 600, marginLeft: 80 }} container direction="column" justify="center" alignItems="center">
+            <Grid item style={{width: 600, marginLeft: 80}} container direction="column" justify="center"
+                  alignItems="center">
                 <Grid item>
                     <h1>List User</h1>
 
                 </Grid>
                 <Grid item container direction="row" justify="center" alignItems="center">
                     <Paper>
-                        <Table >
+                        <Table>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>ID</TableCell>

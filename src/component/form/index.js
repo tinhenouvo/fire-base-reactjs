@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, TextField, Button } from '@material-ui/core';
-import firebase from '../../fireBaseConnection';
-
+import getFirebaseClient from "../../libs/fireBase/getClient";
 
 export default class Form extends Component {
     constructor(props) {
@@ -16,7 +15,9 @@ export default class Form extends Component {
 
 
     registerUser(e) {
-        firebase.database().ref('/register').push(this.state)
+        const { initFirebase } = getFirebaseClient();
+        const database = initFirebase.database()
+        database.ref('/register').push(this.state)
             .then(() => {
                 alert('Register Success!');
             })
